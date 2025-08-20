@@ -27,6 +27,7 @@ A polished social media content downloader with modern UI, multi-platform suppor
 ## Recent Changes
 - Initial project setup with fullstack JavaScript architecture
 - Updated to use X branding instead of Twitter (2024-08-20)
+- Enhanced TikTok bulk download feature: removed download limits for bulk profile downloads, automatically downloads all user videos, improved UI messaging and button states (2024-08-20)
 
 ## Technical Decisions
 - Using React Query for API calls and caching

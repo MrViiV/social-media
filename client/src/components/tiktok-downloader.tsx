@@ -55,7 +55,14 @@ export default function TikTokDownloader() {
       });
       return;
     }
-    downloadMutation.mutate(formData);
+    
+    // For bulk downloads, set limit to a high number to download all videos
+    const submitData = {
+      ...formData,
+      limit: formData.downloadType === 'bulk' ? 1000 : formData.limit
+    };
+    
+    downloadMutation.mutate(submitData);
   };
 
   const downloadTypes = [
@@ -111,7 +118,7 @@ export default function TikTokDownloader() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className={`grid ${formData.downloadType === 'bulk' ? 'grid-cols-1' : 'md:grid-cols-2'} gap-6`}>
             {/* Input Value */}
             <div className="space-y-2">
               <Label className="text-sm font-semibold text-gray-700">
@@ -131,27 +138,33 @@ export default function TikTokDownloader() {
                   <selectedType.icon className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 )}
               </div>
+              {formData.downloadType === 'bulk' && (
+                <p className="text-sm text-blue-600 mt-2">
+                  <span className="font-medium">Bulk mode:</span> Will download all available videos from this user's profile
+                </p>
+              )}
             </div>
 
-            {/* Download Limit */}
-            <div className="space-y-2">
-              <Label className="text-sm font-semibold text-gray-700">Download Limit</Label>
-              <Select 
-                value={formData.limit.toString()} 
-                onValueChange={(value) => setFormData(prev => ({ ...prev, limit: parseInt(value) }))}
-              >
-                <SelectTrigger data-testid="select-limit">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="5">5 videos</SelectItem>
-                  <SelectItem value="10">10 videos</SelectItem>
-                  <SelectItem value="20">20 videos</SelectItem>
-                  <SelectItem value="50">50 videos</SelectItem>
-                  <SelectItem value="100">100 videos (Bulk)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {/* Download Limit - Only show for non-bulk downloads */}
+            {formData.downloadType !== 'bulk' && (
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700">Download Limit</Label>
+                <Select 
+                  value={formData.limit.toString()} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, limit: parseInt(value) }))}
+                >
+                  <SelectTrigger data-testid="select-limit">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5">5 videos</SelectItem>
+                    <SelectItem value="10">10 videos</SelectItem>
+                    <SelectItem value="20">20 videos</SelectItem>
+                    <SelectItem value="50">50 videos</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
 
           {/* Bulk Features Info */}
@@ -195,7 +208,12 @@ export default function TikTokDownloader() {
             ) : (
               <>
                 <Download className="h-5 w-5" />
-                <span className="font-semibold">Start Enhanced Download</span>
+                <span className="font-semibold">
+                  {formData.downloadType === 'bulk' 
+                    ? 'Start Bulk Profile Download' 
+                    : 'Start Enhanced Download'
+                  }
+                </span>
               </>
             )}
           </Button>

@@ -88,24 +88,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }
 
   function generateMockFiles(download: any) {
-    const count = Math.min(download.limit || 10, 50);
+    // For bulk downloads, simulate getting all videos from a user profile
+    let count;
+    if (download.downloadType === 'bulk') {
+      // Simulate a user profile with a realistic number of videos (20-100)
+      count = Math.floor(Math.random() * 80) + 20;
+    } else {
+      count = Math.min(download.limit || 10, 50);
+    }
+    
     const files = [];
     
     for (let i = 1; i <= count; i++) {
-      const fileTypes = ['dance', 'comedy', 'tutorial', 'music', 'trending'];
+      const fileTypes = ['dance', 'comedy', 'tutorial', 'music', 'trending', 'challenge', 'lifestyle', 'food'];
       const type = fileTypes[Math.floor(Math.random() * fileTypes.length)];
       
       files.push({
-        filename: `${type}_video_${String(i).padStart(3, '0')}.mp4`,
-        url: `/downloads/${download.id}/${type}_video_${String(i).padStart(3, '0')}.mp4`,
-        size: `${(Math.random() * 3 + 1).toFixed(1)} MB`,
-        views: Math.floor(Math.random() * 2000000) + 100000,
-        likes: Math.floor(Math.random() * 100000) + 1000,
-        comments: Math.floor(Math.random() * 10000) + 100,
+        filename: `${download.value.replace('@', '')}_${type}_${String(i).padStart(3, '0')}.mp4`,
+        url: `/downloads/${download.id}/${download.value.replace('@', '')}_${type}_${String(i).padStart(3, '0')}.mp4`,
+        size: `${(Math.random() * 4 + 0.5).toFixed(1)} MB`,
+        views: Math.floor(Math.random() * 5000000) + 50000,
+        likes: Math.floor(Math.random() * 200000) + 500,
+        comments: Math.floor(Math.random() * 15000) + 50,
         metadata: JSON.stringify({
-          duration: `${Math.floor(Math.random() * 60) + 15}s`,
-          quality: '720p',
-          uploadDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+          duration: `${Math.floor(Math.random() * 180) + 15}s`,
+          quality: download.downloadType === 'bulk' ? '1080p' : '720p',
+          uploadDate: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString(),
+          hashtags: ['#fyp', '#viral', '#trending', `#${type}`],
         }),
       });
     }
