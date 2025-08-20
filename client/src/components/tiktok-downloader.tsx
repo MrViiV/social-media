@@ -196,7 +196,6 @@ export default function TikTokDownloader() {
               <>
                 <Download className="h-5 w-5" />
                 <span className="font-semibold">Start Enhanced Download</span>
-                <span className="bg-white bg-opacity-20 text-xs px-2 py-1 rounded-full">Pro</span>
               </>
             )}
           </Button>
