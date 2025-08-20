@@ -10,8 +10,7 @@ const tools = [
     id: 'tiktok', 
     name: 'TikTok', 
     icon: Video, 
-    color: 'btn-tiktok',
-    badge: 'Enhanced'
+    color: 'btn-tiktok'
   },
   { 
     id: 'instagram', 
