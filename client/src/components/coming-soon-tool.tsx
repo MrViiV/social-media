@@ -26,7 +26,7 @@ export default function ComingSoonTool({ toolName, icon: IconComponent, color, e
           color === 'bg-red-500' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
         }`}>
           <Clock className="h-4 w-4" />
-          <span className="font-medium" data-testid="expected-date">Expected: {expectedDate}</span>
+          <span className="font-medium" data-testid="expected-date">Soon...</span>
         </div>
       </div>
     </div>
