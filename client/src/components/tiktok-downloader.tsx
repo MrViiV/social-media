@@ -74,9 +74,6 @@ export default function TikTokDownloader() {
         <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-3 mb-2" data-testid="tiktok-title">
           <Video className="h-8 w-8" />
           TikTok Downloader
-          <span className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-medium">
-            Enhanced
-          </span>
         </h2>
         <p className="text-gray-600">Download TikTok videos by username, keyword, hashtag, or bulk profile download</p>
       </div>
