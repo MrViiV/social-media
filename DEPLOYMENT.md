@@ -1,39 +1,3 @@
-# Deployment Guide
-
-## Quick Start for Replit Deployment
-
-### 1. Prepare for Production
-Update your `package.json` scripts:
-```json
-{
-  "scripts": {
-    "dev": "NODE_ENV=development tsx server/index.ts",
-    "start": "NODE_ENV=production tsx server/index.ts",
-    "build": "echo 'No build step required for this setup'"
-  }
-}
-```
-
-### 2. Set Environment Variables
-In Replit Secrets tab, add:
-```
-NODE_ENV=production
-DATABASE_URL=your_postgresql_connection_string
-```
-
-### 3. Deploy with Autoscale
-1. Click "Deploy" in your Replit workspace
-2. Select "Autoscale Deployment"
-3. Configure:
-   - Run Command: `npm start`
-   - Machine Power: Choose based on expected traffic
-4. Click "Deploy"
-
-### 4. After Deployment
-- Your app will be live at: `https://your-deployment.replit.app`
-- Monitor usage in the Deployments tab
-- Check logs for any issues
-
 ## Backend Implementation Checklist
 
 ### Phase 1: Database Setup
